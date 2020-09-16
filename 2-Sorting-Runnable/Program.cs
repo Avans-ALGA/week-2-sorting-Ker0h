@@ -10,7 +10,7 @@ namespace ALGA
     {
         static void Main(string[] args)
         {
-            SortList list = new SortList(10);
+            SortList list = new SortList(100);
             Quicksort.quicksort(list);
 
             //Mergesort.mergesort(list);

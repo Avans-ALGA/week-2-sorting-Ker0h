@@ -46,27 +46,30 @@ namespace ALGA
          */
         public static int partition(ISortList list, int pivotIndex, int leftIndex, int rightIndex)
         {
-            Console.WriteLine(list.ToString());
+            Console.WriteLine("Initial Array: " + list.ToString());
 
             // Swap pivot to the end of the array
             list.swap(pivotIndex, list.Count - 1);
             pivotIndex = list.Count - 1;
+
+            // Decrement rightIndex to skip pivot
             rightIndex--;
 
-            Console.WriteLine(list.ToString());
+            Console.WriteLine("Swapped pivot to back: " + list.ToString());
 
             while(rightIndex > leftIndex)
             {
 
                 // Search on the left for number > pivot
-                while (leftIndex < list.Count - 1)
+                while (leftIndex <= rightIndex)
                 {
-                    Console.WriteLine("Left Value: " + list[leftIndex]);
+                    Console.WriteLine("Left: " + leftIndex);
 
                     if(list.compare(leftIndex, pivotIndex) > 0)
                     {
-                        break;
-                    } else
+                       break;
+                    } 
+                    else
                     {
                         leftIndex++;
                     }
@@ -77,12 +80,14 @@ namespace ALGA
                 while (rightIndex >= leftIndex)
                 {
 
-                    Console.WriteLine("Right Value: " + list[rightIndex]);
+                    Console.WriteLine("Right: " + rightIndex);
 
                     if (list.compare(rightIndex, pivotIndex) < 0)
                     {
                         list.swap(leftIndex, rightIndex);
                         Console.WriteLine("Swap: " + list.ToString());
+                        leftIndex++;
+                        rightIndex--;
                         break;
                     }
                     else
