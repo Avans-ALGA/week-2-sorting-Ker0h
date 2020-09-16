@@ -12,6 +12,8 @@ namespace ALGA
         {
             SortList list = new SortList(10);
             Quicksort.quicksort(list);
+
+            //Mergesort.mergesort(list);
             Console.WriteLine(list);
             Console.ReadLine();
         }
