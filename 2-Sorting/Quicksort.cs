@@ -18,15 +18,19 @@ namespace ALGA
         {
             if(leftIndex < rightIndex)
             {
+                int calls = 0;
                 int pivotIndex = (leftIndex + rightIndex) / 2;
                 pivotIndex = partition(list, pivotIndex, leftIndex, rightIndex);
 
+                calls++;
+
                 // quicksort right side
+                Console.WriteLine("Quicksort RIGHT: " + calls);
                 quicksort(list, pivotIndex + 1, rightIndex);
 
                 // quicksort left side
+                Console.WriteLine("Quicksort LEFT: " + calls);
                 quicksort(list, leftIndex, pivotIndex - 1);
-
             }
         }
 
@@ -46,66 +50,56 @@ namespace ALGA
          */
         public static int partition(ISortList list, int pivotIndex, int leftIndex, int rightIndex)
         {
-            Console.WriteLine("Initial Array: " + list.ToString());
+            int l = leftIndex;
+            int r = rightIndex;
+            int p = pivotIndex;
 
-            // Swap pivot to the end of the array
-            list.swap(pivotIndex, list.Count - 1);
-            pivotIndex = list.Count - 1;
+            // Swap pivot to the back
+            list.swap(p, list.Count - 1);
+            p = list.Count - 1;
+            Console.WriteLine("NEW PARTITION\nPivot at the end " + list.ToString());
 
-            // Decrement rightIndex to skip pivot
-            rightIndex--;
+            // Skip pivot
+            r--;
+            Console.WriteLine("R: " + list[r]);
+            Console.WriteLine("P: " + list[p]);
 
-            Console.WriteLine("Swapped pivot to back: " + list.ToString());
-
-            while(rightIndex > leftIndex)
+            // Partitioning
+            Console.WriteLine("Partioning: " + l + " to " + r);
+            while (l < r)
             {
+                Console.WriteLine("Left value " + list[l]);
 
-                // Search on the left for number > pivot
-                while (leftIndex <= rightIndex)
-                {
-                    Console.WriteLine("Left: " + leftIndex);
-
-                    if(list.compare(leftIndex, pivotIndex) > 0)
-                    {
-                       break;
-                    } 
-                    else
-                    {
-                        leftIndex++;
-                    }
-
+                // Search on the left side for value > pivot
+                while (list.compare(l, p) < 0 && l < r) 
+                { 
+                    l++;
+                    Console.WriteLine("Left value " + list[l]);
                 }
 
-                // Search on the right for number < pivot
-                while (rightIndex >= leftIndex)
+                Console.WriteLine("Right value " + list[r]);
+
+                // Search on the right side for value < pivot
+                while (list.compare(r, p) > 0 && r > l)
                 {
+                    r--;
+                    Console.WriteLine("Right value " + list[r]);
+                }
 
-                    Console.WriteLine("Right: " + rightIndex);
-
-                    if (list.compare(rightIndex, pivotIndex) < 0)
-                    {
-                        list.swap(leftIndex, rightIndex);
-                        Console.WriteLine("Swap: " + list.ToString());
-                        leftIndex++;
-                        rightIndex--;
-                        break;
-                    }
-                    else
-                    {
-                        rightIndex--;
-                    }
+                // Swap found values
+                if(list.compare(l, r) > 0)
+                {
+                    Console.WriteLine("Swapped: " + list[l] + " and " + list[r]);
+                    list.swap(l, r);
                 }
             }
 
-          
-            // Swap pivot back in place of current leftIndex
-            list.swap(leftIndex, pivotIndex);
+            list.swap(p, l);
 
-            Console.WriteLine("Pivot Index " + leftIndex);
-            Console.WriteLine("Result: " + list.ToString());
 
-            return leftIndex;
-
+            Console.WriteLine("Swapped pivot back in place: " + list.ToString() + "\n" + "New pivot: " + list[l] + "\n");
+                        
+            return l;
         }
 
     }
