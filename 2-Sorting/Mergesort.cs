@@ -17,8 +17,6 @@ namespace ALGA
 
         public static void mergesort(ISortList list, int leftIndex, int rightIndex)
         {
-            Console.WriteLine(list.ToString());
-            
             if(leftIndex < rightIndex)
             {
                 int middleIndex = (leftIndex + rightIndex) / 2;
